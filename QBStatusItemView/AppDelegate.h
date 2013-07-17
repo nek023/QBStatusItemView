@@ -8,7 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+#import "QBStatusItemViewDelegate.h"
+
+@interface AppDelegate : NSObject <NSApplicationDelegate, QBStatusItemViewDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
 

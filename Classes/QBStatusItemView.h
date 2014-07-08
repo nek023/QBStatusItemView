@@ -2,11 +2,21 @@
 //  QBStatusItemView.h
 //  QBStatusItemView
 //
-//  Created by Tanaka Katsuma on 2013/07/17.
-//
+//  Created by Tanaka Katsuma on 2014/07/09.
+//  Copyright (c) 2014年 Katsuma Tanaka. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
+
+@class QBStatusItemView;
+
+@protocol QBStatusItemViewDelegate <NSObject>
+
+@optional
+- (void)statusItemViewDidActivate:(QBStatusItemView *)statusItemView;
+- (void)statusItemViewDidDeactivate:(QBStatusItemView *)statusItemView;
+
+@end
 
 @protocol QBStatusItemViewDelegate;
 

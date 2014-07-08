@@ -2,12 +2,11 @@
 //  QBStatusItemView.m
 //  QBStatusItemView
 //
-//  Created by Tanaka Katsuma on 2013/07/17.
-//
+//  Created by Tanaka Katsuma on 2014/07/09.
+//  Copyright (c) 2014年 Katsuma Tanaka. All rights reserved.
 //
 
 #import "QBStatusItemView.h"
-#import "QBStatusItemViewDelegate.h"
 
 static const NSTimeInterval QBStatusItemViewLongPressThreshold = 0.25;
 
@@ -15,11 +14,6 @@ static const NSTimeInterval QBStatusItemViewLongPressThreshold = 0.25;
 
 @property (nonatomic, weak) NSTimer *longPressTimer;
 @property (nonatomic, assign, getter = isLongPress) BOOL longPress;
-
-// Handling Long Press
-- (void)startLongPressTimer;
-- (void)stopLongPressTimer;
-- (void)longPressTimerDidFire:(id)sender;
 
 @end
 
@@ -76,6 +70,9 @@ static const NSTimeInterval QBStatusItemViewLongPressThreshold = 0.25;
     [self setNeedsDisplay];
 }
 
+
+#pragma mark - Drawing the Image
+
 - (void)drawRect:(NSRect)rect
 {
     // Draw statusbar background
@@ -83,14 +80,17 @@ static const NSTimeInterval QBStatusItemViewLongPressThreshold = 0.25;
     
     // Draw image
     NSImage *image = (self.highlighted) ? self.alternateImage : self.image;
-    [image drawInRect:NSMakeRect((self.bounds.size.width - image.size.width) / 2.0,
-                                 (self.bounds.size.height - image.size.height) / 2.0 + self.imageInsets.top,
+    [image drawInRect:NSMakeRect((CGRectGetWidth(self.bounds) - image.size.width) / 2.0,
+                                 (CGRectGetHeight(self.bounds) - image.size.height) / 2.0 + self.imageInsets.top,
                                  image.size.width,
                                  image.size.height)
              fromRect:NSMakeRect(0, 0, image.size.width, image.size.height)
             operation:NSCompositeSourceOver
              fraction:1.0];
 }
+
+
+#pragma mark - Handling Mouse Events
 
 - (void)mouseDown:(NSEvent *)event
 {
@@ -100,18 +100,18 @@ static const NSTimeInterval QBStatusItemViewLongPressThreshold = 0.25;
         self.highlighted = NO;
         
         // Delegate
-        if ([self.delegate respondsToSelector:@selector(statusItemViewShouldDismissStatusMenu:)]) {
-            [self.delegate statusItemViewShouldDismissStatusMenu:self];
+        if ([self.delegate respondsToSelector:@selector(statusItemViewDidDeactivate:)]) {
+            [self.delegate statusItemViewDidDeactivate:self];
         }
     } else {
         self.highlighted = YES;
         
-        // Start timer for detecting long press
+        // Start timer to detect long press
         [self startLongPressTimer];
         
         // Delegate
-        if ([self.delegate respondsToSelector:@selector(statusItemViewShouldPresentStatusMenu:)]) {
-            [self.delegate statusItemViewShouldPresentStatusMenu:self];
+        if ([self.delegate respondsToSelector:@selector(statusItemViewDidActivate:)]) {
+            [self.delegate statusItemViewDidActivate:self];
         }
     }
 }
@@ -128,8 +128,8 @@ static const NSTimeInterval QBStatusItemViewLongPressThreshold = 0.25;
         self.highlighted = NO;
         
         // Delegate
-        if ([self.delegate respondsToSelector:@selector(statusItemViewShouldDismissStatusMenu:)]) {
-            [self.delegate statusItemViewShouldDismissStatusMenu:self];
+        if ([self.delegate respondsToSelector:@selector(statusItemViewDidDeactivate:)]) {
+            [self.delegate statusItemViewDidDeactivate:self];
         }
     }
 }
@@ -141,17 +141,20 @@ static const NSTimeInterval QBStatusItemViewLongPressThreshold = 0.25;
 {
     [self stopLongPressTimer];
     
-    NSTimer *longPressTimer = [NSTimer scheduledTimerWithTimeInterval:QBStatusItemViewLongPressThreshold target:self selector:@selector(longPressTimerDidFire:) userInfo:nil repeats:NO];
+    NSTimer *longPressTimer = [NSTimer scheduledTimerWithTimeInterval:QBStatusItemViewLongPressThreshold
+                                                               target:self
+                                                             selector:@selector(longPressTimerDidFire:)
+                                                             userInfo:nil
+                                                              repeats:NO];
     self.longPressTimer = longPressTimer;
 }
 
 - (void)stopLongPressTimer
 {
-    if ([self.longPressTimer isValid]) {
+    if (self.longPressTimer) {
         [self.longPressTimer invalidate];
+        self.longPressTimer = nil;
     }
-    
-    self.longPressTimer = nil;
 }
 
 - (void)longPressTimerDidFire:(id)sender

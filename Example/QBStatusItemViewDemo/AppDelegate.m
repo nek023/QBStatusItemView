@@ -1,16 +1,17 @@
 //
 //  AppDelegate.m
-//  QBStatusItemView
+//  QBStatusItemViewDemo
 //
-//  Created by Tanaka Katsuma on 2013/07/17.
-//
+//  Created by Tanaka Katsuma on 2014/07/09.
+//  Copyright (c) 2014年 Katsuma Tanaka. All rights reserved.
 //
 
 #import "AppDelegate.h"
 
+// QBStatusItemView
 #import "QBStatusItemView.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () <QBStatusItemViewDelegate>
 
 @property (nonatomic, strong) NSStatusItem *statusItem;
 
@@ -34,14 +35,14 @@
 
 #pragma mark - QBStatusItemViewDelegate
 
-- (void)statusItemViewShouldPresentStatusMenu:(QBStatusItemView *)statusItemView
+- (void)statusItemViewDidActivate:(QBStatusItemView *)statusItemView
 {
-    NSLog(@"*** statusItemViewShouldPresentStatusMenu:");
+    NSLog(@"*** statusItemViewDidActivate:");
 }
 
-- (void)statusItemViewShouldDismissStatusMenu:(QBStatusItemView *)statusItemView
+- (void)statusItemViewDidDeactivate:(QBStatusItemView *)statusItemView
 {
-    NSLog(@"*** statusItemViewShouldDismissStatusMenu:");
+    NSLog(@"*** statusItemViewDidDeactivate:");
 }
 
 @end

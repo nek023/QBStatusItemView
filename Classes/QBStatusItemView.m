@@ -25,7 +25,7 @@ static const NSTimeInterval QBStatusItemViewLongPressThreshold = 0.25;
     
     if (self) {
         self.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
-        self.imageInsets = NSEdgeInsetsMake(1, 4, 0, 4);
+        self.imageInsets = NSEdgeInsetsMake(0.0, 4.0, 2.0, 4.0);
     }
     
     return self;
@@ -80,8 +80,8 @@ static const NSTimeInterval QBStatusItemViewLongPressThreshold = 0.25;
     
     // Draw image
     NSImage *image = (self.highlighted) ? self.alternateImage : self.image;
-    [image drawInRect:NSMakeRect((CGRectGetWidth(self.bounds) - image.size.width) / 2.0,
-                                 (CGRectGetHeight(self.bounds) - image.size.height) / 2.0 + self.imageInsets.top,
+    [image drawInRect:NSMakeRect(self.imageInsets.left,
+                                 self.imageInsets.bottom,
                                  image.size.width,
                                  image.size.height)
              fromRect:NSMakeRect(0, 0, image.size.width, image.size.height)

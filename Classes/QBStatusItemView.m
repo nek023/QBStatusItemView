@@ -12,7 +12,7 @@ static const NSTimeInterval QBStatusItemViewLongPressThreshold = 0.25;
 
 @interface QBStatusItemView ()
 
-@property (nonatomic, weak) NSTimer *longPressTimer;
+@property (nonatomic, qbsiv_weak) NSTimer *longPressTimer;
 @property (nonatomic, assign, getter = isLongPress) BOOL longPress;
 
 @end

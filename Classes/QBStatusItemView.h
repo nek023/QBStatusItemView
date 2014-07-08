@@ -8,6 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 
+// Compatibility
+#import <Availability.h>
+
+#if __has_feature(objc_arc_weak)
+#define qbsiv_weak weak
+#else
+#define qbsiv_weak unsafe_unretained
+#endif
+
 @class QBStatusItemView;
 
 @protocol QBStatusItemViewDelegate <NSObject>
@@ -22,8 +31,8 @@
 
 @interface QBStatusItemView : NSControl
 
-@property (nonatomic, weak) id<QBStatusItemViewDelegate> delegate;
-@property (nonatomic, weak) NSStatusItem *statusItem;
+@property (nonatomic, qbsiv_weak) id<QBStatusItemViewDelegate> delegate;
+@property (nonatomic, qbsiv_weak) NSStatusItem *statusItem;
 
 @property (nonatomic, assign, getter = isHighlighted) BOOL highlighted;
 @property (nonatomic, strong) NSImage *image;

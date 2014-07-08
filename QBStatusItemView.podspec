@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "QBStatusItemView"
-  s.version          = "1.0.0"
+  s.version          = "1.0.1"
   s.summary          = "Custom status item view that can be highlighted programmaticallly."
   s.description      = <<-DESC
                        `NSStatusItem` can be highlighted only if it is clicked.  

@@ -29,7 +29,7 @@
 
 @protocol QBStatusItemViewDelegate;
 
-@interface QBStatusItemView : NSControl
+@interface QBStatusItemView : NSView
 
 @property (nonatomic, qbsiv_weak) id<QBStatusItemViewDelegate> delegate;
 @property (nonatomic, qbsiv_weak) NSStatusItem *statusItem;

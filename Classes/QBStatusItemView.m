@@ -43,7 +43,7 @@ static const NSTimeInterval QBStatusItemViewLongPressThreshold = 0.25;
 {
     _highlighted = highlighted;
     
-    [self setNeedsDisplay];
+    [self setNeedsDisplay:YES];
 }
 
 - (void)setImage:(NSImage *)image
@@ -55,7 +55,7 @@ static const NSTimeInterval QBStatusItemViewLongPressThreshold = 0.25;
                             MAX(self.image.size.width, self.alternateImage.size.width) + self.imageInsets.left + self.imageInsets.right,
                             self.statusItem.statusBar.thickness);
     
-    [self setNeedsDisplay];
+    [self setNeedsDisplay:YES];
 }
 
 - (void)setAlternateImage:(NSImage *)alternateImage
@@ -67,7 +67,7 @@ static const NSTimeInterval QBStatusItemViewLongPressThreshold = 0.25;
                             MAX(self.image.size.width, self.alternateImage.size.width) + self.imageInsets.left + self.imageInsets.right,
                             self.statusItem.statusBar.thickness);
     
-    [self setNeedsDisplay];
+    [self setNeedsDisplay:YES];
 }
 
 
